@@ -13,28 +13,29 @@
   body { background: radial-gradient(#0b0f2a,#050814); }
   .cosmic-layer { position:absolute; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:-1; }
 
-  /* --- Orbiting Objects --- */
-  .orbit { position:absolute; width:150px; height:150px; top:0; left:0; transform-origin:center center; }
-  .orbiting { position:absolute; top:0; left:50%; transform:translateX(-50%); border-radius:50%; box-shadow:0 0 20px rgba(255,255,255,0.7); }
-  .orbiting.planet { width:50px; height:50px; background:linear-gradient(135deg,#8b5cf6,#6366f1); animation: orbit 20s linear infinite; }
-  .orbiting.galaxy { width:80px; height:80px; background:radial-gradient(#a5b4fc,#3b82f6); animation: orbit 40s linear infinite; }
-
-  @keyframes orbit {
-    0% { transform: rotate(0deg) translateX(60px) rotate(0deg); }
-    100% { transform: rotate(360deg) translateX(60px) rotate(-360deg); }
+  /* --- Floating Planets & Galaxies --- */
+  .planet, .galaxy, .shooting-star {
+    position:absolute; border-radius:50%; pointer-events:none; box-shadow:0 0 20px rgba(255,255,255,0.7);
+    animation: float 15s infinite ease-in-out alternate;
   }
+  .planet { width:50px; height:50px; background: linear-gradient(135deg,#8b5cf6,#6366f1); }
+  .galaxy { width:80px; height:80px; background: radial-gradient(#a5b4fc,#3b82f6); }
+  .shooting-star { width:4px; height:15px; background:#fff; transform:rotate(45deg); animation:shoot 3s infinite linear; }
 
-  /* --- Shooting Stars --- */
-  .shooting-star { position:absolute; width:4px; height:15px; background:#fff; box-shadow:0 0 10px #fff; transform:rotate(45deg); animation:shoot 3s infinite linear; }
-  @keyframes shoot { 0% { transform:translate(0,0) rotate(45deg); opacity:1; } 100% { transform:translate(-300px,300px) rotate(45deg); opacity:0; } }
-
-  /* --- Twinkling Stars --- */
-  .twinkle { position:absolute; width:2px; height:2px; background:#fff; border-radius:50%; opacity:0.7; animation: twinkle 2s infinite alternate; }
-  @keyframes twinkle { 0% { opacity:0.2; } 50% { opacity:1; } 100% { opacity:0.2; } }
+  @keyframes float {
+    0% { transform: translateY(0) translateX(0) rotate(0deg); }
+    50% { transform: translateY(-30px) translateX(20px) rotate(15deg); }
+    100% { transform: translateY(0) translateX(0) rotate(0deg); }
+  }
+  @keyframes shoot {
+    0% { transform: translate(0,0) rotate(45deg); opacity:1; }
+    100% { transform: translate(-300px,300px) rotate(45deg); opacity:0; }
+  }
 
   /* --- Sections & Panels --- */
   .section { display:none; width:100%; height:100%; position:relative; }
   .section.active { display:block; }
+
   .panel.hero {
     position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);
     text-align:center; max-width:900px; width:90%;
@@ -88,29 +89,15 @@
     <p class="footer-hint">Click a card to explore or customize your universe with the bottom settings.</p>
   </div>
 
-  <!-- Cosmic layer -->
+  <!-- Cosmic layer with floating planets restored -->
   <div class="cosmic-layer">
-    <!-- Orbits -->
-    <div class="orbit" style="top:20%; left:30%;">
-      <div class="planet orbiting" style="animation-delay:0s;"></div>
-    </div>
-    <div class="orbit" style="top:60%; left:70%;">
-      <div class="planet orbiting" style="background:linear-gradient(135deg,#7dd3fc,#0ea5e9); animation-delay:1s;"></div>
-    </div>
-    <div class="orbit" style="top:40%; left:50%;">
-      <div class="galaxy orbiting" style="animation-delay:2s;"></div>
-    </div>
-
-    <!-- Shooting stars -->
+    <div class="planet" style="top:10%; left:15%; animation-delay:0s;"></div>
+    <div class="planet" style="top:40%; left:70%; animation-delay:2s;"></div>
+    <div class="planet" style="top:65%; left:35%; animation-delay:4s;"></div>
+    <div class="galaxy" style="top:20%; left:50%; animation-delay:1s;"></div>
+    <div class="galaxy" style="top:60%; left:80%; animation-delay:3s;"></div>
     <div class="shooting-star" style="top:5%; left:90%; animation-delay:0s;"></div>
     <div class="shooting-star" style="top:75%; left:10%; animation-delay:2s;"></div>
-
-    <!-- Twinkling stars -->
-    <div class="twinkle" style="top:10%; left:20%; animation-delay:0s;"></div>
-    <div class="twinkle" style="top:30%; left:50%; animation-delay:1s;"></div>
-    <div class="twinkle" style="top:80%; left:70%; animation-delay:2s;"></div>
-    <div class="twinkle" style="top:50%; left:30%; animation-delay:3s;"></div>
-    <div class="twinkle" style="top:15%; left:80%; animation-delay:4s;"></div>
   </div>
 </div>
 
@@ -125,7 +112,7 @@
   <iframe src="https://example-tv-domain.com" frameborder="0" style="width:100%; height:100%;"></iframe>
 </div>
 
-<!-- --- Settings Panel --- -->
+<!-- --- Settings Panel (previous working version) --- -->
 <div id="settingsPanel">
   <label>Theme Color:</label><input type="color" id="themeColor" value="#7c3aed">
   <label>Background Stars:</label><input type="range" id="starDensity" min="10" max="200" value="100">
@@ -145,7 +132,7 @@
       sections.forEach(s => s.classList.remove('active'));
       const target = document.getElementById(card.dataset.target);
       target.classList.add('active');
-      document.title = card.textContent; // dynamic title
+      document.title = card.textContent; // dynamic tab title
     });
   });
 
