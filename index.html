@@ -5,47 +5,44 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Zypher | Home</title>
 <style>
-html,body{margin:0;padding:0;height:100%;overflow-x:hidden;font-family:monospace;background:#050510;color:white;cursor:none;}
-#space{position:fixed;top:0;left:0;z-index:-5;}
-.fog-layer{position:fixed;width:200%;height:200%;background:radial-gradient(circle at 30% 40%, rgba(100,80,255,.15), transparent 50%),radial-gradient(circle at 70% 70%, rgba(50,120,255,.1), transparent 50%);animation:fogMove 40s linear infinite;z-index:-4;}
+html,body{
+margin:0; padding:0; height:100%; overflow-x:hidden; font-family:monospace; background:#050510; color:white; cursor:none;
+}
+#space{position:fixed; top:0; left:0; z-index:-5;}
+.fog-layer{position:fixed; width:200%; height:200%; background:radial-gradient(circle at 30% 40%, rgba(100,80,255,.15), transparent 50%), radial-gradient(circle at 70% 70%, rgba(50,120,255,.1), transparent 50%); animation:fogMove 40s linear infinite; z-index:-4;}
 @keyframes fogMove{from{transform:translate(0,0);}to{transform:translate(-10%,-10%);}}
 
-.planet{position:absolute;border-radius:50%;background:radial-gradient(circle at 30% 30%, #b0a6ff, #362a7f);box-shadow:0 0 30px rgba(120,120,255,.6);transform-origin:center center;}
-.moon{position:absolute;border-radius:50%;background:radial-gradient(circle at 30% 30%, #ccc,#888);box-shadow:0 0 10px rgba(200,200,255,.4);}
-.planet-ring{position:absolute;border-radius:50%;border:2px solid rgba(180,180,255,.3);transform:rotateX(60deg);}
+.planet{position:absolute; border-radius:50%; background:radial-gradient(circle at 30% 30%, #b0a6ff, #362a7f); box-shadow:0 0 30px rgba(120,120,255,.6); transform-origin:center center;}
+.moon{position:absolute; border-radius:50%; background:radial-gradient(circle at 30% 30%, #ccc, #888); box-shadow:0 0 10px rgba(200,200,255,.4);}
+.planet-ring{position:absolute; border-radius:50%; border:2px solid rgba(180,180,255,.3); transform:rotateX(60deg);}
 
-.container{position:relative;display:flex;flex-direction:column;align-items:center;margin-top:60px;}
-.tabs{display:flex;gap:25px;margin-bottom:25px;}
-.tab{padding:10px 22px;border-radius:25px;border:1px solid rgba(150,150,255,.6);background:rgba(20,20,50,.6);backdrop-filter:blur(10px);cursor:pointer;transition:.3s;}
+.container{position:relative; display:flex; flex-direction:column; align-items:center; margin-top:60px;}
+.tabs{display:flex; gap:25px; margin-bottom:25px;}
+.tab{padding:10px 22px; border-radius:25px; border:1px solid rgba(150,150,255,.6); background:rgba(20,20,50,.6); backdrop-filter:blur(10px); cursor:pointer; transition:.3s;}
 .tab:hover{background:rgba(120,120,255,.4);}
-.activeTab{border:1px solid #9d8cff;box-shadow:0 0 15px #8d7dff;}
+.activeTab{border:1px solid #9d8cff; box-shadow:0 0 15px #8d7dff;}
 
-.section{display:none;flex-direction:column;align-items:center;animation:fadeIn .4s ease forwards;}
+.section{display:none; flex-direction:column; align-items:center; animation:fadeIn .4s ease forwards;}
 .active{display:flex;}
 @keyframes fadeIn{from{opacity:0; transform:scale(.95);} to{opacity:1; transform:scale(1);}}
 
-.panel{width:90%;max-width:900px;background:rgba(20,20,50,.5);border-radius:30px;padding:25px;backdrop-filter:blur(20px);box-shadow:0 0 25px rgba(100,100,255,.3);margin-bottom:20px;text-align:center;}
+.panel{width:90%; max-width:900px; background:rgba(20,20,50,.5); border-radius:30px; padding:25px; backdrop-filter:blur(20px); box-shadow:0 0 25px rgba(100,100,255,.3); margin-bottom:20px;}
 
-input,button{padding:10px;border-radius:20px;border:none;margin-top:10px;font-family:monospace;}
-input{width:80%;background:rgba(0,0,0,.5);color:white;border:1px solid rgba(150,150,255,.5);}
-button{background:linear-gradient(45deg,#7b5fff,#4ca9ff);color:white;cursor:pointer;transition:.3s;}
-button:hover{transform:scale(1.05);box-shadow:0 0 15px #8d7dff;}
-iframe{width:100%;height:300px;border-radius:20px;border:none;margin-top:10px;}
+input,button{padding:10px; border-radius:20px; border:none; margin-top:10px; font-family:monospace;}
+input{width:80%; background:rgba(0,0,0,.5); color:white; border:1px solid rgba(150,150,255,.5);}
+button{background:linear-gradient(45deg,#7b5fff,#4ca9ff); color:white; cursor:pointer; transition:.3s;}
+button:hover{transform:scale(1.05); box-shadow:0 0 15px #8d7dff;}
+iframe{width:100%; height:300px; border-radius:20px; border:none; margin-top:10px;}
 
-.hero{text-align:center;margin:50px 0 20px 0;}
-.hero h1{font-size:64px;color:#b3cfff;text-shadow:0 0 20px #8d7dff;animation:glow 2s infinite alternate;}
+.hero{text-align:center; margin:50px 0 20px 0;}
+.hero h1{font-size:64px; color:#b3cfff; text-shadow:0 0 20px #8d7dff; animation:glow 2s infinite alternate;}
 @keyframes glow{from{text-shadow:0 0 20px #8d7dff;}to{text-shadow:0 0 40px #b3cfff;}}
 
-.card-quick{display:inline-block;background:rgba(50,50,80,.5);border-radius:25px;padding:20px 40px;margin:15px;box-shadow:0 0 15px rgba(120,120,255,.4);cursor:pointer;transition:0.3s;}
-.card-quick:hover{transform:scale(1.05);box-shadow:0 0 30px rgba(180,180,255,.6);}
+.card-quick{display:inline-block; background:rgba(50,50,80,.5); border-radius:25px; padding:20px 40px; margin:15px; box-shadow:0 0 15px rgba(120,120,255,.4); cursor:pointer; transition:0.3s;}
+.card-quick:hover{transform:scale(1.05); box-shadow:0 0 30px rgba(180,180,255,.6);}
 
-/* Cursor trail */
+/* ===== CURSOR TRAIL ===== */
 .cursor{position:absolute;width:8px;height:8px;border-radius:50%;background:rgba(180,180,255,.8);pointer-events:none;z-index:9999;}
-
-/* Settings panel */
-#settingsPanel{position:fixed;bottom:0;left:0;width:100%;background:rgba(20,20,50,.6);backdrop-filter:blur(15px);display:flex;justify-content:space-around;padding:10px;z-index:999;flex-wrap:wrap;border-top:1px solid rgba(150,150,255,.3);}
-.setting{margin:5px; color:white;}
-.setting label{margin-right:5px;}
 </style>
 </head>
 <body>
@@ -76,7 +73,7 @@ iframe{width:100%;height:300px;border-radius:20px;border:none;margin-top:10px;}
     <div class="card-quick" onclick="switchTab('games')">🎮 Games</div>
     <div class="card-quick" onclick="switchTab('movies')">🎬 Movies</div>
     <div class="card-quick" onclick="switchTab('tv')">📺 TV</div>
-    <button id="audioToggle" style="margin-top:20px;">🔊 Toggle Lofi Music</button>
+    <button id="audioToggle" style="margin-top:20px;">🔊 Toggle Space Audio</button>
   </div>
 </div>
 
@@ -85,35 +82,11 @@ iframe{width:100%;height:300px;border-radius:20px;border:none;margin-top:10px;}
 <div id="tv" class="section"><div class="panel"><button onclick="addCard('tv')">➕ Add</button></div></div>
 </div>
 
-<!-- Cursor -->
+<!-- Cursor trail -->
 <div id="cursorTrail"></div>
 
-<!-- Settings Panel -->
-<div id="settingsPanel">
-  <div class="setting">
-    <label>Color Scheme:</label>
-    <select id="colorScheme">
-      <option value="purple">Purple/Blue</option>
-      <option value="green">Green</option>
-      <option value="pink">Pink</option>
-      <option value="red">Red</option>
-    </select>
-  </div>
-  <div class="setting">
-    <label>Planet Speed:</label>
-    <select id="planetSpeed">
-      <option value="slow">Slow</option>
-      <option value="medium" selected>Medium</option>
-      <option value="fast">Fast</option>
-    </select>
-  </div>
-  <div class="setting"><label><input type="checkbox" id="toggleMoons" checked> Moons</label></div>
-  <div class="setting"><label><input type="checkbox" id="toggleParticles" checked> Particles</label></div>
-  <div class="setting"><label><input type="checkbox" id="toggleCursor" checked> Cursor Trail</label></div>
-</div>
-
 <script>
-/* TAB SWITCH */
+/* ===== DYNAMIC TAB TITLE ===== */
 function switchTab(id){
   document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
   document.getElementById(id).classList.add('active');
@@ -129,7 +102,6 @@ function addCard(id){
   const panel=section.querySelector(".panel");
   const card=document.createElement("div");
   card.innerHTML=`<iframe></iframe><input placeholder="Paste embed link" oninput="this.previousElementSibling.src=this.value">`;
-  card.style.margin="auto";
   panel.appendChild(card);
 }
 
@@ -139,227 +111,58 @@ function search(){
   if(q) window.open("https://www.google.com/search?q="+encodeURIComponent(q),"_blank");
 }
 
-/* SPACE ENGINE */
-const canvas=document.getElementById("space");const ctx=canvas.getContext("2d");
-function resize(){canvas.width=window.innerWidth;canvas.height=window.innerHeight;}
-resize();window.addEventListener("resize",resize);
-let stars=[];for(let i=0;i<400;i++){stars.push({x:Math.random()*canvas.width,y:Math.random()*canvas.height,size:Math.random()*2,alpha:Math.random(),speed:Math.random()*0.2});}
-function animate(){ctx.clearRect(0,0,canvas.width,canvas.height);stars.forEach(s=>{s.alpha+=(Math.random()-.5)*0.02;if(s.alpha<0)s.alpha=0;if(s.alpha>1)s.alpha=1;ctx.fillStyle=`rgba(180,180,255,${s.alpha})`;ctx.fillRect(s.x,s.y,s.size,s.size);s.y+=s.speed;if(s.y>canvas.height)s.y=0;});requestAnimationFrame(animate);}
+/* ===== SPACE ENGINE ===== */
+const canvas=document.getElementById("space");
+const ctx=canvas.getContext("2d");
+function resize(){ canvas.width=window.innerWidth; canvas.height=window.innerHeight; }
+resize();
+window.addEventListener("resize",resize);
+
+/* STARFIELD + TWINKLE */
+let stars=[];
+for(let i=0;i<400;i++){
+  stars.push({x:Math.random()*canvas.width,y:Math.random()*canvas.height,size:Math.random()*2,alpha:Math.random(),speed:Math.random()*0.2});
+}
+function animate(){
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  stars.forEach(s=>{
+    s.alpha+=(Math.random()-.5)*0.02;
+    if(s.alpha<0)s.alpha=0;if(s.alpha>1)s.alpha=1;
+    ctx.fillStyle=`rgba(180,180,255,${s.alpha})`;
+    ctx.fillRect(s.x,s.y,s.size,s.size);
+    s.y+=s.speed;if(s.y>canvas.height) s.y=0;
+  });
+  requestAnimationFrame(animate);
+}
 animate();
 
-/* CURSOR TRAIL */
-let trail=document.createElement("div");trail.className="cursor";document.body.appendChild(trail);
+/* ===== CURSOR TRAIL ===== */
+let trail=document.createElement("div"); trail.className="cursor"; document.body.appendChild(trail);
 document.addEventListener("mousemove",e=>{
-  if(document.getElementById("toggleCursor").checked){trail.style.display="block";trail.style.left=e.clientX+"px";trail.style.top=e.clientY+"px";}
-  else trail.style.display="none";
+  trail.style.left=e.clientX+"px"; trail.style.top=e.clientY+"px";
 });
 
-/* AMBIENT Lofi Music */
-let audio=new Audio('https://assets.mixkit.co/music/preview/mixkit-lofi-chill-beats-1787.mp3'); audio.loop=true;
+/* ===== AMBIENT AUDIO ===== */
+let audio=new Audio('https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3'); audio.loop=true;
 document.getElementById("audioToggle").onclick=()=>{ audio.paused?audio.play():audio.pause(); };
 
-/* PLANETS + MOONS */
-let planet1=document.getElementById("planet1"); let planet2=document.getElementById("planet2");
+/* ===== PLANET ROTATION & MOONS ===== */
+let planet1=document.getElementById("planet1");
+let planet2=document.getElementById("planet2");
 let angle1=0, angle2=0;
 function planetAnimate(){
-  let speed = document.getElementById("planetSpeed").value;
-  let mult = (speed==="slow"?0.0005:speed==="medium"?0.001:0.003);
-  angle1+=mult; angle2-=mult;
-  planet1.style.transform=`rotate(${angle1}rad)`; planet2.style.transform=`rotate(${angle2}rad)`;
+  angle1+=0.001; angle2-=0.0012;
+  planet1.style.transform=`rotate(${angle1}rad)`;
+  planet2.style.transform=`rotate(${angle2}rad)`;
   requestAnimationFrame(planetAnimate);
 }
 planetAnimate();
 
-/* COLOR SCHEME CHANGE */
-document.getElementById("colorScheme").addEventListener("change",(e)=>{
-  let val=e.target.value;
-  if(val==="purple"){document.body.style.background="#050510";} 
-  else if(val==="green"){document.body.style.background="#001100";} 
-  else if(val==="pink"){document.body.style.background="#1a001a";} 
-  else if(val==="red"){document.body.style.background="#200000";}
+/* ===== TAB SWITCH ZOOM EFFECT ===== */
+document.querySelectorAll(".tab").forEach(t=>{
+  t.addEventListener("click",()=>{ document.body.style.transform="scale(0.97)"; setTimeout(()=>{document.body.style.transform="scale(1)";},200); });
 });
 </script>
-</body>
-</html><!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Zypher | Home</title>
-<style>
-html,body{margin:0;padding:0;height:100%;overflow-x:hidden;font-family:monospace;background:#050510;color:white;cursor:none;}
-#space{position:fixed;top:0;left:0;z-index:-5;}
-.fog-layer{position:fixed;width:200%;height:200%;background:radial-gradient(circle at 30% 40%, rgba(100,80,255,.15), transparent 50%),radial-gradient(circle at 70% 70%, rgba(50,120,255,.1), transparent 50%);animation:fogMove 40s linear infinite;z-index:-4;}
-@keyframes fogMove{from{transform:translate(0,0);}to{transform:translate(-10%,-10%);}}
 
-.planet{position:absolute;border-radius:50%;background:radial-gradient(circle at 30% 30%, #b0a6ff, #362a7f);box-shadow:0 0 30px rgba(120,120,255,.6);transform-origin:center center;}
-.moon{position:absolute;border-radius:50%;background:radial-gradient(circle at 30% 30%, #ccc,#888);box-shadow:0 0 10px rgba(200,200,255,.4);}
-.planet-ring{position:absolute;border-radius:50%;border:2px solid rgba(180,180,255,.3);transform:rotateX(60deg);}
-
-.container{position:relative;display:flex;flex-direction:column;align-items:center;margin-top:60px;}
-.tabs{display:flex;gap:25px;margin-bottom:25px;}
-.tab{padding:10px 22px;border-radius:25px;border:1px solid rgba(150,150,255,.6);background:rgba(20,20,50,.6);backdrop-filter:blur(10px);cursor:pointer;transition:.3s;}
-.tab:hover{background:rgba(120,120,255,.4);}
-.activeTab{border:1px solid #9d8cff;box-shadow:0 0 15px #8d7dff;}
-
-.section{display:none;flex-direction:column;align-items:center;animation:fadeIn .4s ease forwards;}
-.active{display:flex;}
-@keyframes fadeIn{from{opacity:0; transform:scale(.95);} to{opacity:1; transform:scale(1);}}
-
-.panel{width:90%;max-width:900px;background:rgba(20,20,50,.5);border-radius:30px;padding:25px;backdrop-filter:blur(20px);box-shadow:0 0 25px rgba(100,100,255,.3);margin-bottom:20px;text-align:center;}
-
-input,button{padding:10px;border-radius:20px;border:none;margin-top:10px;font-family:monospace;}
-input{width:80%;background:rgba(0,0,0,.5);color:white;border:1px solid rgba(150,150,255,.5);}
-button{background:linear-gradient(45deg,#7b5fff,#4ca9ff);color:white;cursor:pointer;transition:.3s;}
-button:hover{transform:scale(1.05);box-shadow:0 0 15px #8d7dff;}
-iframe{width:100%;height:300px;border-radius:20px;border:none;margin-top:10px;}
-
-.hero{text-align:center;margin:50px 0 20px 0;}
-.hero h1{font-size:64px;color:#b3cfff;text-shadow:0 0 20px #8d7dff;animation:glow 2s infinite alternate;}
-@keyframes glow{from{text-shadow:0 0 20px #8d7dff;}to{text-shadow:0 0 40px #b3cfff;}}
-
-.card-quick{display:inline-block;background:rgba(50,50,80,.5);border-radius:25px;padding:20px 40px;margin:15px;box-shadow:0 0 15px rgba(120,120,255,.4);cursor:pointer;transition:0.3s;}
-.card-quick:hover{transform:scale(1.05);box-shadow:0 0 30px rgba(180,180,255,.6);}
-
-/* Cursor trail */
-.cursor{position:absolute;width:8px;height:8px;border-radius:50%;background:rgba(180,180,255,.8);pointer-events:none;z-index:9999;}
-
-/* Settings panel */
-#settingsPanel{position:fixed;bottom:0;left:0;width:100%;background:rgba(20,20,50,.6);backdrop-filter:blur(15px);display:flex;justify-content:space-around;padding:10px;z-index:999;flex-wrap:wrap;border-top:1px solid rgba(150,150,255,.3);}
-.setting{margin:5px; color:white;}
-.setting label{margin-right:5px;}
-</style>
-</head>
-<body>
-
-<canvas id="space"></canvas>
-<div class="fog-layer"></div>
-
-<!-- Planets -->
-<div class="planet" id="planet1" style="width:120px;height:120px;top:20%;left:15%;"></div>
-<div class="planet" id="planet2" style="width:80px;height:80px;top:60%;left:75%;"></div>
-
-<div class="container">
-<div class="tabs">
-  <div class="tab activeTab" onclick="switchTab('home')">Home</div>
-  <div class="tab" onclick="switchTab('games')">Games</div>
-  <div class="tab" onclick="switchTab('movies')">Movies</div>
-  <div class="tab" onclick="switchTab('tv')">TV</div>
-</div>
-
-<!-- Home -->
-<div id="home" class="section active">
-  <div class="hero panel">
-    <h1>Zypher</h1>
-    <input id="searchInput" placeholder="Search the universe..."><br>
-    <button onclick="search()">Search</button>
-  </div>
-  <div class="panel">
-    <div class="card-quick" onclick="switchTab('games')">🎮 Games</div>
-    <div class="card-quick" onclick="switchTab('movies')">🎬 Movies</div>
-    <div class="card-quick" onclick="switchTab('tv')">📺 TV</div>
-    <button id="audioToggle" style="margin-top:20px;">🔊 Toggle Lofi Music</button>
-  </div>
-</div>
-
-<div id="games" class="section"><div class="panel"><button onclick="addCard('games')">➕ Add</button></div></div>
-<div id="movies" class="section"><div class="panel"><button onclick="addCard('movies')">➕ Add</button></div></div>
-<div id="tv" class="section"><div class="panel"><button onclick="addCard('tv')">➕ Add</button></div></div>
-</div>
-
-<!-- Cursor -->
-<div id="cursorTrail"></div>
-
-<!-- Settings Panel -->
-<div id="settingsPanel">
-  <div class="setting">
-    <label>Color Scheme:</label>
-    <select id="colorScheme">
-      <option value="purple">Purple/Blue</option>
-      <option value="green">Green</option>
-      <option value="pink">Pink</option>
-      <option value="red">Red</option>
-    </select>
-  </div>
-  <div class="setting">
-    <label>Planet Speed:</label>
-    <select id="planetSpeed">
-      <option value="slow">Slow</option>
-      <option value="medium" selected>Medium</option>
-      <option value="fast">Fast</option>
-    </select>
-  </div>
-  <div class="setting"><label><input type="checkbox" id="toggleMoons" checked> Moons</label></div>
-  <div class="setting"><label><input type="checkbox" id="toggleParticles" checked> Particles</label></div>
-  <div class="setting"><label><input type="checkbox" id="toggleCursor" checked> Cursor Trail</label></div>
-</div>
-
-<script>
-/* TAB SWITCH */
-function switchTab(id){
-  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
-  document.getElementById(id).classList.add('active');
-  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('activeTab'));
-  event.target.classList.add('activeTab');
-  document.title="Zypher | "+id.charAt(0).toUpperCase()+id.slice(1);
-  document.querySelectorAll("iframe").forEach(f=>f.src="");
-}
-
-/* ADD CARD */
-function addCard(id){
-  const section=document.getElementById(id);
-  const panel=section.querySelector(".panel");
-  const card=document.createElement("div");
-  card.innerHTML=`<iframe></iframe><input placeholder="Paste embed link" oninput="this.previousElementSibling.src=this.value">`;
-  card.style.margin="auto";
-  panel.appendChild(card);
-}
-
-/* SEARCH */
-function search(){
-  let q=document.getElementById("searchInput").value;
-  if(q) window.open("https://www.google.com/search?q="+encodeURIComponent(q),"_blank");
-}
-
-/* SPACE ENGINE */
-const canvas=document.getElementById("space");const ctx=canvas.getContext("2d");
-function resize(){canvas.width=window.innerWidth;canvas.height=window.innerHeight;}
-resize();window.addEventListener("resize",resize);
-let stars=[];for(let i=0;i<400;i++){stars.push({x:Math.random()*canvas.width,y:Math.random()*canvas.height,size:Math.random()*2,alpha:Math.random(),speed:Math.random()*0.2});}
-function animate(){ctx.clearRect(0,0,canvas.width,canvas.height);stars.forEach(s=>{s.alpha+=(Math.random()-.5)*0.02;if(s.alpha<0)s.alpha=0;if(s.alpha>1)s.alpha=1;ctx.fillStyle=`rgba(180,180,255,${s.alpha})`;ctx.fillRect(s.x,s.y,s.size,s.size);s.y+=s.speed;if(s.y>canvas.height)s.y=0;});requestAnimationFrame(animate);}
-animate();
-
-/* CURSOR TRAIL */
-let trail=document.createElement("div");trail.className="cursor";document.body.appendChild(trail);
-document.addEventListener("mousemove",e=>{
-  if(document.getElementById("toggleCursor").checked){trail.style.display="block";trail.style.left=e.clientX+"px";trail.style.top=e.clientY+"px";}
-  else trail.style.display="none";
-});
-
-/* AMBIENT Lofi Music */
-let audio=new Audio('https://assets.mixkit.co/music/preview/mixkit-lofi-chill-beats-1787.mp3'); audio.loop=true;
-document.getElementById("audioToggle").onclick=()=>{ audio.paused?audio.play():audio.pause(); };
-
-/* PLANETS + MOONS */
-let planet1=document.getElementById("planet1"); let planet2=document.getElementById("planet2");
-let angle1=0, angle2=0;
-function planetAnimate(){
-  let speed = document.getElementById("planetSpeed").value;
-  let mult = (speed==="slow"?0.0005:speed==="medium"?0.001:0.003);
-  angle1+=mult; angle2-=mult;
-  planet1.style.transform=`rotate(${angle1}rad)`; planet2.style.transform=`rotate(${angle2}rad)`;
-  requestAnimationFrame(planetAnimate);
-}
-planetAnimate();
-
-/* COLOR SCHEME CHANGE */
-document.getElementById("colorScheme").addEventListener("change",(e)=>{
-  let val=e.target.value;
-  if(val==="purple"){document.body.style.background="#050510";} 
-  else if(val==="green"){document.body.style.background="#001100";} 
-  else if(val==="pink"){document.body.style.background="#1a001a";} 
-  else if(val==="red"){document.body.style.background="#200000";}
-});
-</script>
 </body>
 </html>
