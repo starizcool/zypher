@@ -5,76 +5,60 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Zypher</title>
 <style>
-  /* --- General Reset --- */
-  * { margin:0; padding:0; box-sizing:border-box; font-family: 'Segoe UI', sans-serif; }
-  html, body { width:100%; height:100%; overflow:hidden; background:#0a0f1e; color:#fff; }
+/* --- Reset & Base --- */
+* { margin:0; padding:0; box-sizing:border-box; font-family:'Segoe UI',sans-serif; }
+html, body { width:100%; height:100%; overflow:hidden; background:#0a0f1e; color:#fff; }
 
-  /* --- Cosmic Background --- */
-  body { background: radial-gradient(#0b0f2a, #050814); }
-  .cosmic-layer { position:absolute; top:0; left:0; width:100%; height:100%; pointer-events:none; }
-  .planet, .galaxy, .shooting-star {
-    position:absolute; border-radius:50%; pointer-events:none;
-    animation: float 15s infinite ease-in-out alternate;
-  }
-  .planet { width:50px; height:50px; background: linear-gradient(135deg,#8b5cf6,#6366f1); box-shadow:0 0 20px #8b5cf6; }
-  .galaxy { width:80px; height:80px; background: radial-gradient(#a5b4fc,#3b82f6); box-shadow:0 0 25px #a5b4fc; }
-  .shooting-star { width:4px; height:15px; background:#fff; box-shadow:0 0 10px #fff; transform:rotate(45deg); animation:shoot 3s infinite linear; }
+/* --- Home Panel --- */
+.panel.hero {
+  position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);
+  text-align:center; max-width:900px; width:90%;
+}
+.title { font-size:3em; margin-bottom:0.2em; color:#a78bfa; }
+.sub { font-size:1.2em; margin-bottom:1em; color:#c4b5fd; }
 
-  @keyframes float {
-    0% { transform: translateY(0) translateX(0) rotate(0deg); }
-    50% { transform: translateY(-30px) translateX(20px) rotate(15deg); }
-    100% { transform: translateY(0) translateX(0) rotate(0deg); }
-  }
-  @keyframes shoot {
-    0% { transform: translate(0,0) rotate(45deg); opacity:1; }
-    100% { transform: translate(-300px,300px) rotate(45deg); opacity:0; }
-  }
+/* --- Search Row --- */
+.search-row { display:flex; justify-content:center; gap:10px; margin-bottom:2em; }
+.search-row input { padding:0.7em 1em; border-radius:999px; border:none; width:50%; max-width:400px; outline:none; }
+.search-row button { padding:0.7em 1.2em; border-radius:999px; border:none; background:#7c3aed; color:#fff; cursor:pointer; }
 
-  /* --- Sections & Panels --- */
-  .section { display:none; width:100%; height:100%; position:relative; }
-  .section.active { display:block; }
+/* --- Quick Cards --- */
+.quick-links { display:flex; justify-content:center; gap:20px; margin-bottom:1em; flex-wrap:wrap; }
+.quick-card { padding:1em 2em; border-radius:50px; background: rgba(124,58,237,0.3); cursor:pointer; transition:0.3s; font-size:1.1em; }
+.quick-card:hover { background: rgba(124,58,237,0.6); }
+.footer-hint { margin-top:1em; font-size:0.9em; color:#9ca3af; }
 
-  .panel.hero {
-    position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);
-    text-align:center; max-width:900px; width:90%;
-  }
+/* --- Sections --- */
+.section { display:none; width:100%; height:100%; position:relative; }
+.section.active { display:block; }
 
-  .title { font-size:3em; margin-bottom:0.2em; color:#a78bfa; }
-  .sub { font-size:1.2em; margin-bottom:1em; color:#c4b5fd; }
+/* --- Cosmic Layer --- */
+#cosmos { position:absolute; top:0; left:0; width:100%; height:100%; z-index:-1; }
 
-  /* --- Search Row --- */
-  .search-row { display:flex; justify-content:center; gap:10px; margin-bottom:2em; }
-  .search-row input { padding:0.7em 1em; border-radius:999px; border:none; width:50%; max-width:400px; outline:none; }
-  .search-row button { padding:0.7em 1.2em; border-radius:999px; border:none; background:#7c3aed; color:#fff; cursor:pointer; }
+/* --- Settings Panel --- */
+#settingsPanel {
+  position:fixed; bottom:0; left:50%; transform:translateX(-50%);
+  background: rgba(24,24,36,0.9); padding:1em 2em; border-radius:20px;
+  display:flex; gap:15px; align-items:center; flex-wrap:wrap;
+}
+#settingsPanel label { font-size:0.9em; margin-right:5px; }
+#settingsPanel input[type=color], #settingsPanel input[type=range] { cursor:pointer; }
 
-  /* --- Quick Links --- */
-  .quick-links { display:flex; justify-content:center; gap:20px; margin-bottom:1em; flex-wrap:wrap; }
-  .quick-card {
-    padding:1em 2em; border-radius:50px; background: rgba(124,58,237,0.3);
-    cursor:pointer; transition:0.3s; font-size:1.1em;
-  }
-  .quick-card:hover { background: rgba(124,58,237,0.6); }
+/* --- Planets / Stars / Galaxies --- */
+.planet, .galaxy, .moon { position:absolute; border-radius:50%; pointer-events:none; }
+.planet { background: linear-gradient(135deg,#8b5cf6,#6366f1); width:50px; height:50px; box-shadow:0 0 20px rgba(255,255,255,0.7); }
+.galaxy { background: radial-gradient(#a5b4fc,#3b82f6); width:80px; height:80px; box-shadow:0 0 30px rgba(165,180,252,0.6); }
+.moon { background:#c4b5fd; width:15px; height:15px; box-shadow:0 0 5px #fff; }
 
-  /* --- Footer Hint --- */
-  .footer-hint { margin-top:1em; font-size:0.9em; color:#9ca3af; }
-
-  /* --- Settings Panel --- */
-  #settingsPanel {
-    position:fixed; bottom:0; left:50%; transform:translateX(-50%);
-    background: rgba(24, 24, 36, 0.9); padding:1em 2em; border-radius:20px;
-    display:flex; gap:15px; align-items:center; flex-wrap:wrap;
-  }
-  #settingsPanel label { font-size:0.9em; margin-right:5px; }
-  #settingsPanel input[type=color] { cursor:pointer; }
 </style>
 </head>
 <body>
 
-<!-- --- Sections --- -->
+<!-- Home Section -->
 <div id="home" class="section active">
   <div class="panel hero">
     <h1 class="title">Zypher</h1>
-    <p class="sub">Your personal cosmic portal — save your links, explore, and customize your universe.</p>
+    <p class="sub">Your personal cosmic portal — save links, explore, and customize your universe.</p>
 
     <div class="search-row">
       <input id="homeSearch" placeholder="Search the universe (Google)..." />
@@ -86,84 +70,85 @@
       <div class="quick-card" data-target="movies">🎬 Movies</div>
       <div class="quick-card" data-target="tv">📺 TV</div>
     </div>
-
-    <div class="cosmic-layer">
-      <div class="planet" style="top: 10%; left: 15%; animation-delay: 0s;"></div>
-      <div class="planet" style="top: 40%; left: 70%; animation-delay: 2s;"></div>
-      <div class="planet" style="top: 65%; left: 35%; animation-delay: 4s;"></div>
-      <div class="galaxy" style="top: 20%; left: 50%; animation-delay: 1s;"></div>
-      <div class="galaxy" style="top: 60%; left: 80%; animation-delay: 3s;"></div>
-      <div class="shooting-star" style="top: 5%; left: 90%; animation-delay: 0s;"></div>
-      <div class="shooting-star" style="top: 75%; left: 10%; animation-delay: 2s;"></div>
-    </div>
-
     <p class="footer-hint">Click a card to explore or customize your universe with the bottom settings.</p>
   </div>
 </div>
 
-<!-- --- Other Tabs (Games, Movies, TV) --- -->
-<div id="games" class="section">
-  <iframe src="https://example-game-domain.com" frameborder="0" style="width:100%; height:100%;"></iframe>
-</div>
-<div id="movies" class="section">
-  <iframe src="https://example-movie-domain.com" frameborder="0" style="width:100%; height:100%;"></iframe>
-</div>
-<div id="tv" class="section">
-  <iframe src="https://example-tv-domain.com" frameborder="0" style="width:100%; height:100%;"></iframe>
-</div>
+<!-- Other Tabs -->
+<div id="games" class="section"><iframe src="https://example-game-domain.com" frameborder="0" style="width:100%; height:100%;"></iframe></div>
+<div id="movies" class="section"><iframe src="https://example-movie-domain.com" frameborder="0" style="width:100%; height:100%;"></iframe></div>
+<div id="tv" class="section"><iframe src="https://example-tv-domain.com" frameborder="0" style="width:100%; height:100%;"></iframe></div>
 
-<!-- --- Settings Panel --- -->
+<!-- Cosmic Layer -->
+<canvas id="cosmos"></canvas>
+
+<!-- Settings Panel -->
 <div id="settingsPanel">
   <label>Theme Color:</label><input type="color" id="themeColor" value="#7c3aed">
-  <label>Background Stars:</label><input type="range" id="starDensity" min="10" max="200" value="100">
+  <label>Planet Speed:</label><input type="range" id="planetSpeed" min="0.1" max="3" step="0.1" value="1">
+  <label>Toggle Moons:</label><input type="checkbox" id="toggleMoons" checked>
   <label>Music:</label><button id="toggleMusic">Play/Pause Lofi</button>
 </div>
 
-<!-- --- Audio --- -->
 <audio id="lofiAudio" loop src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"></audio>
 
 <script>
-  /* --- Tab Switching --- */
-  const sections = document.querySelectorAll('.section');
-  const quickCards = document.querySelectorAll('.quick-card');
+// --- Sections / Tab Switching ---
+const sections = document.querySelectorAll('.section');
+const cards = document.querySelectorAll('.quick-card');
+cards.forEach(card => card.addEventListener('click', () => {
+  sections.forEach(s=>s.classList.remove('active'));
+  document.getElementById(card.dataset.target).classList.add('active');
+  document.title = card.textContent;
+}));
 
-  quickCards.forEach(card => {
-    card.addEventListener('click', () => {
-      sections.forEach(s => s.classList.remove('active'));
-      const target = document.getElementById(card.dataset.target);
-      target.classList.add('active');
-      document.title = card.textContent; // Update window title
-    });
-  });
+// --- Search ---
+document.getElementById('homeSearchBtn').addEventListener('click', () => {
+  const q = document.getElementById('homeSearch').value.trim();
+  if(q) window.open(`https://www.google.com/search?q=${encodeURIComponent(q)}`, '_blank');
+});
 
-  /* --- Search --- */
-  const searchInput = document.getElementById('homeSearch');
-  const searchBtn = document.getElementById('homeSearchBtn');
-  searchBtn.addEventListener('click', () => {
-    const query = searchInput.value.trim();
-    if(query) window.open(`https://www.google.com/search?q=${encodeURIComponent(query)}`, '_blank');
-  });
+// --- Audio ---
+const lofiAudio = document.getElementById('lofiAudio');
+document.getElementById('toggleMusic').addEventListener('click', () => {
+  if(lofiAudio.paused) lofiAudio.play();
+  else lofiAudio.pause();
+});
 
-  /* --- Settings --- */
-  const themeColor = document.getElementById('themeColor');
-  const starDensity = document.getElementById('starDensity');
-  const lofiAudio = document.getElementById('lofiAudio');
-  const toggleMusic = document.getElementById('toggleMusic');
+// --- Theme / Settings ---
+const themeColor = document.getElementById('themeColor');
+themeColor.addEventListener('input',()=>document.documentElement.style.setProperty('--theme-color', themeColor.value));
 
-  themeColor.addEventListener('input', () => {
-    document.documentElement.style.setProperty('--theme-color', themeColor.value);
-  });
+// --- Cosmic Canvas ---
+const canvas = document.getElementById('cosmos');
+const ctx = canvas.getContext('2d');
+let width = canvas.width = window.innerWidth;
+let height = canvas.height = window.innerHeight;
 
-  starDensity.addEventListener('input', () => {
-    document.querySelectorAll('.planet, .galaxy, .shooting-star').forEach(el => {
-      el.style.transform = `scale(${starDensity.value/100})`;
-    });
-  });
+window.addEventListener('resize',()=>{ width = canvas.width = window.innerWidth; height = canvas.height = window.innerHeight; });
 
-  toggleMusic.addEventListener('click', () => {
-    if(lofiAudio.paused) lofiAudio.play();
-    else lofiAudio.pause();
-  });
+class Star { constructor(){ this.reset(); } reset(){ this.x=Math.random()*width; this.y=Math.random()*height; this.size=Math.random()*2; this.speed=0.2+Math.random()*0.5; } update(){ this.y-=this.speed; if(this.y<0) this.reset(); } draw(){ ctx.fillStyle='#fff'; ctx.beginPath(); ctx.arc(this.x,this.y,this.size,0,Math.PI*2); ctx.fill(); } }
+
+class Planet { constructor(){ this.x=Math.random()*width; this.y=Math.random()*height; this.radius=20+Math.random()*30; this.angle=Math.random()*Math.PI*2; this.speed=0.001+Math.random()*0.002; this.color=['#8b5cf6','#6366f1','#7dd3fc','#0ea5e9'][Math.floor(Math.random()*4)]; this.moons=[]; if(document.getElementById('toggleMoons').checked){ let count=Math.floor(Math.random()*3); for(let i=0;i<count;i++){ this.moons.push({angle:Math.random()*Math.PI*2,dist: this.radius+10+Math.random()*20}); } } } update(){ this.angle+=this.speed*document.getElementById('planetSpeed').value; } draw(){ ctx.save(); ctx.translate(this.x,this.y); ctx.fillStyle=this.color; ctx.beginPath(); ctx.arc(0,0,this.radius,0,Math.PI*2); ctx.fill(); for(const m of this.moons){ const mx=Math.cos(m.angle)*(m.dist); const my=Math.sin(m.angle)*(m.dist); ctx.beginPath(); ctx.arc(mx,my,5,0,Math.PI*2); ctx.fillStyle='#c4b5fd'; ctx.fill(); m.angle+=0.02; } ctx.restore(); } }
+
+let stars=[]; for(let i=0;i<200;i++) stars.push(new Star());
+let planets=[]; for(let i=0;i<6;i++) planets.push(new Planet());
+
+function animate(){
+  ctx.clearRect(0,0,width,height);
+  stars.forEach(s=>{ s.update(); s.draw(); });
+  planets.forEach(p=>{ p.update(); p.draw(); });
+  requestAnimationFrame(animate);
+}
+animate();
+
+document.getElementById('toggleMoons').addEventListener('change',()=>{
+  planets.forEach(p=>p.moons=[]); // reset moons
+  if(document.getElementById('toggleMoons').checked){
+    planets.forEach(p=>{ let count=Math.floor(Math.random()*3); for(let i=0;i<count;i++){ p.moons.push({angle:Math.random()*Math.PI*2,dist: p.radius+10+Math.random()*20}); } });
+  }
+});
+
 </script>
 </body>
 </html>
