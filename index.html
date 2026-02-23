@@ -2,174 +2,214 @@
 <html>
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Matrix Portal</title>
+<title>Zypher Space Portal</title>
 <style>
 html, body {
   margin: 0;
   padding: 0;
-  overflow-x: hidden;
-  background: black;
-  color: #00ff66;
+  height: 100%;
   font-family: monospace;
+  background: radial-gradient(circle at top, #0b0c1a 0%, #000000 100%);
+  overflow-x: hidden;
+  color: #00ffff;
 }
 
-/* MATRIX CANVAS */
-canvas {
+/* CANVAS FOR STARFIELD */
+canvas#spaceCanvas {
   position: fixed;
   top: 0;
   left: 0;
   z-index: -3;
 }
 
-/* GRID FLOOR */
-.grid {
-  position: fixed;
-  bottom: 0;
-  width: 100%;
-  height: 40%;
-  background-image:
-    linear-gradient(rgba(0,255,100,0.2) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(0,255,100,0.2) 1px, transparent 1px);
-  background-size: 40px 40px;
-  transform: perspective(500px) rotateX(60deg);
-  animation: gridMove 6s linear infinite;
+/* NEBULA GLOW */
+.nebula {
+  position: absolute;
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, rgba(0,255,255,0.2), transparent 70%);
+  animation: pulse 10s infinite ease-in-out;
   z-index: -2;
 }
-@keyframes gridMove {
-  from { background-position: 0 0, 0 0; }
-  to { background-position: 0 40px, 40px 0; }
+@keyframes pulse {
+  0% { transform: scale(0.8); opacity: 0.3; }
+  50% { transform: scale(1.3); opacity: 0.6; }
+  100% { transform: scale(0.8); opacity: 0.3; }
 }
 
-/* TABS */
+/* TAB BUTTONS */
 .tabs {
   display: flex;
   justify-content: center;
   gap: 20px;
   margin-top: 20px;
+  z-index: 2;
+  position: relative;
 }
 .tab-btn {
   padding: 10px 20px;
-  border: 1px solid #00ff66;
+  border: 1px solid #00ffff;
   cursor: pointer;
   transition: 0.3s;
 }
 .tab-btn:hover {
-  background: #00ff66;
+  background: #00ffff;
   color: black;
 }
+
+/* SECTIONS */
 .section {
   display: none;
   padding: 30px;
+  z-index: 1;
+  position: relative;
 }
-.active {
-  display: block;
-}
+.active { display: block; }
 
 /* CARDS */
 .card {
-  border: 1px solid #00ff66;
+  border: 1px solid #00ffff;
   padding: 15px;
   margin: 15px 0;
+  background: rgba(0,255,255,0.05);
+  border-radius: 8px;
 }
 iframe {
   width: 100%;
   height: 300px;
 }
-input, select {
-  width: 100%;
+input, button {
   padding: 8px;
-  background: black;
-  border: 1px solid #00ff66;
-  color: #00ff66;
   margin-top: 5px;
+  background: black;
+  border: 1px solid #00ffff;
+  color: #00ffff;
+  border-radius: 5px;
+  font-family: monospace;
 }
 button {
-  margin-top: 8px;
-  padding: 8px;
-  background: #00ff66;
-  border: none;
   cursor: pointer;
   font-weight: bold;
+  transition: 0.2s;
 }
-button:hover {
-  background: #00cc55;
+button:hover { background: #00cccc; color: black; }
+
+/* SEARCH BAR ON HOME */
+#home input[type="text"] {
+  width: 80%;
+  margin-top: 15px;
+}
+#home h1 {
+  font-size: 48px;
+  text-align: center;
+  margin-bottom: 10px;
+  color: #00ffff;
+}
+
+/* COMET STREAKS */
+.comet {
+  position: absolute;
+  width: 2px;
+  height: 60px;
+  background: linear-gradient(white, rgba(0,255,255,0));
+  opacity: 0.7;
+  transform: rotate(45deg);
+  animation: cometMove linear infinite;
+}
+@keyframes cometMove {
+  from { transform: translateY(-100px) rotate(45deg); opacity: 0; }
+  50% { opacity: 1; }
+  to { transform: translateY(100vh) rotate(45deg); opacity: 0; }
 }
 </style>
 </head>
 <body>
 
-<canvas id="matrix"></canvas>
-<div class="grid"></div>
+<canvas id="spaceCanvas"></canvas>
 
+<!-- NEBULA GLOWS -->
+<div class="nebula" style="top:10%; left:15%;"></div>
+<div class="nebula" style="top:50%; left:70%;"></div>
+<div class="nebula" style="top:70%; left:30%;"></div>
+
+<!-- TAB BUTTONS -->
 <div class="tabs">
+  <div class="tab-btn" onclick="showTab('home')">🏠 Home</div>
   <div class="tab-btn" onclick="showTab('games')">🎮 Games</div>
   <div class="tab-btn" onclick="showTab('movies')">🎬 Movies</div>
   <div class="tab-btn" onclick="showTab('tv')">📺 TV</div>
-  <div class="tab-btn" onclick="showTab('search')">🔍 Search</div>
 </div>
 
-<div id="games" class="section active"></div>
-<div id="movies" class="section"></div>
-<div id="tv" class="section"></div>
-
-<div id="search" class="section">
-  <select id="engine">
-    <option value="https://www.google.com/search?q=">Google</option>
-    <option value="https://duckduckgo.com/?q=">DuckDuckGo</option>
-  </select>
-  <input type="text" id="searchInput" placeholder="Enter search query...">
+<!-- SECTIONS -->
+<div id="home" class="section active">
+  <h1>Zypher</h1>
+  <input type="text" placeholder="Search...">
   <button onclick="doSearch()">Search</button>
 </div>
 
+<div id="games" class="section"></div>
+<div id="movies" class="section"></div>
+<div id="tv" class="section"></div>
+
 <script>
-/* MATRIX RAIN */
-const canvas = document.getElementById("matrix");
+/* STARFIELD BACKGROUND */
+const canvas = document.getElementById("spaceCanvas");
 const ctx = canvas.getContext("2d");
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
-
-const letters = "01ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-const fontSize = 16;
-const columns = canvas.width / fontSize;
-const drops = [];
-
-for (let i = 0; i < columns; i++) drops[i] = 1;
-
-function draw() {
-  ctx.fillStyle = "rgba(0,0,0,0.08)";
-  ctx.fillRect(0,0,canvas.width,canvas.height);
-  ctx.fillStyle = "#00ff66";
-  ctx.font = fontSize + "px monospace";
-  for (let i = 0; i < drops.length; i++) {
-    const text = letters[Math.floor(Math.random()*letters.length)];
-    ctx.fillText(text, i*fontSize, drops[i]*fontSize);
-    if (drops[i]*fontSize > canvas.height && Math.random() > 0.975)
-      drops[i] = 0;
-    drops[i]++;
-  }
+const stars = [];
+for(let i=0;i<200;i++){
+  stars.push({x:Math.random()*canvas.width, y:Math.random()*canvas.height, r:Math.random()*1.5+0.5, d:Math.random()*0.5});
 }
-setInterval(draw, 35);
+function drawStars(){
+  ctx.fillStyle = "rgba(0,0,0,0.1)";
+  ctx.fillRect(0,0,canvas.width,canvas.height);
+  ctx.fillStyle="#00ffff";
+  for(let i=0;i<stars.length;i++){
+    const s=stars[i];
+    ctx.beginPath();
+    ctx.arc(s.x,s.y,s.r,0,Math.PI*2);
+    ctx.fill();
+    s.y += s.d;
+    if(s.y>canvas.height){s.y=0;s.x=Math.random()*canvas.width;}
+  }
+  requestAnimationFrame(drawStars);
+}
+drawStars();
+
+/* COMETS */
+function spawnComet(){
+  const c = document.createElement("div");
+  c.className = "comet";
+  c.style.left = Math.random()*100 + "vw";
+  c.style.top = "-100px";
+  c.style.animationDuration = (Math.random()*3+2) + "s";
+  document.body.appendChild(c);
+  setTimeout(()=>{c.remove();},5000);
+}
+setInterval(spawnComet,2000);
 
 /* TAB SWITCH */
-function showTab(id) {
-  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+function showTab(id){
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
   document.getElementById(id).classList.add('active');
+  // Remove all iframes to avoid leftover frames
+  document.querySelectorAll('.section iframe').forEach(f=>{f.src="";});
 }
 
-/* ADD CARD FUNCTION */
-function addCard(sectionId) {
-  const section = document.getElementById(sectionId);
-  const card = document.createElement("div");
-  card.className = "card";
-  card.innerHTML = `
+/* ADD CARD */
+function addCard(sectionId){
+  const section=document.getElementById(sectionId);
+  const card=document.createElement("div");
+  card.className="card";
+  card.innerHTML=`
     <iframe src=""></iframe>
-    <input type="text" placeholder="Paste embed link..."
-      oninput="this.previousElementSibling.src=this.value">
+    <input type="text" placeholder="Paste embed link..." oninput="this.previousElementSibling.src=this.value">
   `;
   section.appendChild(card);
 }
 
-/* INITIAL BUTTONS */
+/* INITIAL ADD BUTTONS */
 ["games","movies","tv"].forEach(id=>{
   const btn=document.createElement("button");
   btn.innerText="➕ Add";
@@ -177,20 +217,17 @@ function addCard(sectionId) {
   document.getElementById(id).appendChild(btn);
 });
 
-/* SEARCH */
-function doSearch() {
-  const engine = document.getElementById("engine").value;
-  const query = document.getElementById("searchInput").value;
-  window.open(engine + encodeURIComponent(query), "_blank");
+/* SEARCH FUNCTION */
+function doSearch(){
+  const query = document.querySelector("#home input").value;
+  if(query) window.open("https://www.google.com/search?q="+encodeURIComponent(query)," _blank");
 }
 
-/* GLITCH FLASH */
-setInterval(()=>{
-  if(Math.random()>0.95){
-    document.body.style.filter="brightness(1.6)";
-    setTimeout(()=>document.body.style.filter="brightness(1)",100);
-  }
-},500);
+/* RESIZE CANVAS */
+window.addEventListener("resize",()=>{
+  canvas.width=window.innerWidth;
+  canvas.height=window.innerHeight;
+});
 </script>
 
 </body>
