@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Zypher Space Portal</title>
@@ -9,12 +9,12 @@ html, body {
   padding: 0;
   height: 100%;
   font-family: monospace;
-  background: radial-gradient(circle at top, #0b0c1a 0%, #000000 100%);
+  background: radial-gradient(circle at top, #1a0b2c 0%, #000000 100%);
+  color: #b3cfff;
   overflow-x: hidden;
-  color: #00ffff;
 }
 
-/* CANVAS FOR STARFIELD */
+/* STARFIELD */
 canvas#spaceCanvas {
   position: fixed;
   top: 0;
@@ -22,19 +22,34 @@ canvas#spaceCanvas {
   z-index: -3;
 }
 
-/* NEBULA GLOW */
+/* NEBULA GLOWS */
 .nebula {
   position: absolute;
-  width: 400px;
-  height: 400px;
-  background: radial-gradient(circle, rgba(0,255,255,0.2), transparent 70%);
-  animation: pulse 10s infinite ease-in-out;
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(179, 207, 255,0.2), transparent 70%);
+  border-radius: 50%;
+  animation: pulse 12s infinite ease-in-out;
   z-index: -2;
 }
 @keyframes pulse {
-  0% { transform: scale(0.8); opacity: 0.3; }
-  50% { transform: scale(1.3); opacity: 0.6; }
-  100% { transform: scale(0.8); opacity: 0.3; }
+  0% { transform: scale(0.8); opacity:0.3; }
+  50% { transform: scale(1.3); opacity:0.6; }
+  100% { transform: scale(0.8); opacity:0.3; }
+}
+
+/* PLANETS */
+.planet {
+  position: absolute;
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 30%, #c0b3ff, #4b2e8f);
+  box-shadow: 0 0 15px #b3cfff;
+  cursor: pointer;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+.planet:hover {
+  transform: scale(1.15);
+  box-shadow: 0 0 30px #b3cfff;
 }
 
 /* TAB BUTTONS */
@@ -48,12 +63,13 @@ canvas#spaceCanvas {
 }
 .tab-btn {
   padding: 10px 20px;
-  border: 1px solid #00ffff;
+  border: 1px solid #b3cfff;
+  border-radius: 15px;
   cursor: pointer;
   transition: 0.3s;
 }
 .tab-btn:hover {
-  background: #00ffff;
+  background: #b3cfff;
   color: black;
 }
 
@@ -68,11 +84,11 @@ canvas#spaceCanvas {
 
 /* CARDS */
 .card {
-  border: 1px solid #00ffff;
+  border: 1px solid #b3cfff;
   padding: 15px;
   margin: 15px 0;
-  background: rgba(0,255,255,0.05);
-  border-radius: 8px;
+  background: rgba(179,207,255,0.05);
+  border-radius: 15px;
 }
 iframe {
   width: 100%;
@@ -81,10 +97,10 @@ iframe {
 input, button {
   padding: 8px;
   margin-top: 5px;
-  background: black;
-  border: 1px solid #00ffff;
-  color: #00ffff;
-  border-radius: 5px;
+  background: #120a2a;
+  border: 1px solid #b3cfff;
+  color: #b3cfff;
+  border-radius: 12px;
   font-family: monospace;
 }
 button {
@@ -92,9 +108,9 @@ button {
   font-weight: bold;
   transition: 0.2s;
 }
-button:hover { background: #00cccc; color: black; }
+button:hover { background: #8faaff; color: black; }
 
-/* SEARCH BAR ON HOME */
+/* SEARCH BAR */
 #home input[type="text"] {
   width: 80%;
   margin-top: 15px;
@@ -103,15 +119,15 @@ button:hover { background: #00cccc; color: black; }
   font-size: 48px;
   text-align: center;
   margin-bottom: 10px;
-  color: #00ffff;
+  color: #b3cfff;
 }
 
-/* COMET STREAKS */
+/* COMETS */
 .comet {
   position: absolute;
   width: 2px;
   height: 60px;
-  background: linear-gradient(white, rgba(0,255,255,0));
+  background: linear-gradient(white, rgba(179,207,255,0));
   opacity: 0.7;
   transform: rotate(45deg);
   animation: cometMove linear infinite;
@@ -127,10 +143,15 @@ button:hover { background: #00cccc; color: black; }
 
 <canvas id="spaceCanvas"></canvas>
 
-<!-- NEBULA GLOWS -->
+<!-- NEBULAS -->
 <div class="nebula" style="top:10%; left:15%;"></div>
 <div class="nebula" style="top:50%; left:70%;"></div>
 <div class="nebula" style="top:70%; left:30%;"></div>
+
+<!-- PLANETS -->
+<div class="planet" style="top:20%; left:25%; width:80px; height:80px;"></div>
+<div class="planet" style="top:60%; left:60%; width:120px; height:120px;"></div>
+<div class="planet" style="top:40%; left:80%; width:60px; height:60px;"></div>
 
 <!-- TAB BUTTONS -->
 <div class="tabs">
@@ -146,25 +167,25 @@ button:hover { background: #00cccc; color: black; }
   <input type="text" placeholder="Search...">
   <button onclick="doSearch()">Search</button>
 </div>
-
 <div id="games" class="section"></div>
 <div id="movies" class="section"></div>
 <div id="tv" class="section"></div>
 
 <script>
-/* STARFIELD BACKGROUND */
+/* STARFIELD */
 const canvas = document.getElementById("spaceCanvas");
 const ctx = canvas.getContext("2d");
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
-const stars = [];
-for(let i=0;i<200;i++){
-  stars.push({x:Math.random()*canvas.width, y:Math.random()*canvas.height, r:Math.random()*1.5+0.5, d:Math.random()*0.5});
+
+const stars=[];
+for(let i=0;i<250;i++){
+  stars.push({x:Math.random()*canvas.width,y:Math.random()*canvas.height,r:Math.random()*1.5+0.5,d:Math.random()*0.5});
 }
 function drawStars(){
-  ctx.fillStyle = "rgba(0,0,0,0.1)";
+  ctx.fillStyle="rgba(0,0,0,0.1)";
   ctx.fillRect(0,0,canvas.width,canvas.height);
-  ctx.fillStyle="#00ffff";
+  ctx.fillStyle="#b3cfff";
   for(let i=0;i<stars.length;i++){
     const s=stars[i];
     ctx.beginPath();
@@ -179,11 +200,11 @@ drawStars();
 
 /* COMETS */
 function spawnComet(){
-  const c = document.createElement("div");
-  c.className = "comet";
-  c.style.left = Math.random()*100 + "vw";
-  c.style.top = "-100px";
-  c.style.animationDuration = (Math.random()*3+2) + "s";
+  const c=document.createElement("div");
+  c.className="comet";
+  c.style.left=Math.random()*100+"vw";
+  c.style.top="-100px";
+  c.style.animationDuration=(Math.random()*3+2)+"s";
   document.body.appendChild(c);
   setTimeout(()=>{c.remove();},5000);
 }
@@ -193,7 +214,7 @@ setInterval(spawnComet,2000);
 function showTab(id){
   document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
   document.getElementById(id).classList.add('active');
-  // Remove all iframes to avoid leftover frames
+  // Remove leftover iframes
   document.querySelectorAll('.section iframe').forEach(f=>{f.src="";});
 }
 
@@ -217,10 +238,10 @@ function addCard(sectionId){
   document.getElementById(id).appendChild(btn);
 });
 
-/* SEARCH FUNCTION */
+/* SEARCH */
 function doSearch(){
-  const query = document.querySelector("#home input").value;
-  if(query) window.open("https://www.google.com/search?q="+encodeURIComponent(query)," _blank");
+  const query=document.querySelector("#home input").value;
+  if(query) window.open("https://www.google.com/search?q="+encodeURIComponent(query), "_blank");
 }
 
 /* RESIZE CANVAS */
